@@ -1,0 +1,14 @@
+{
+  "main": "org.durmiendo.ajf.core.AJF",
+  "name": "ajflib",
+  "displayName": "AJF Lib",
+  "author": "Durmiendo & kostolom9777",
+  "repo": "",
+  "subtitle": "",
+  "description": "",
+  "version": "0.1",
+  "minGameVersion": "146",
+  "java": true,
+  "hidden": true,
+  "hideBrowser": false
+}

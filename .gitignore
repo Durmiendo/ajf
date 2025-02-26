@@ -1,0 +1,29 @@
+### Gradle files
+/.gradle/
+/gradle/
+/build/
+cache/
+javax.annotation.processing.Processor
+artifacts/
+
+
+### Local files
+/settings/local.json
+
+### Generated files
+/gen/
+
+
+/run/
+
+### IntelliJ IDEA files
+/.idea/
+
+### Aseprite files
+*.aseprite
+*.ase
+
+*.jar
+*.bin
+
+/annotations/build/
