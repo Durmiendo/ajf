@@ -12,6 +12,7 @@ artifacts/
 
 ### Generated files
 /gen/
+/antlr-gen/
 
 
 /run/

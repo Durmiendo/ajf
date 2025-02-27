@@ -1,4 +1,4 @@
-package org.durmiendo.ajf.grafics;
+package org.durmiendo.ajf.graphics;
 
 import arc.graphics.g2d.Draw;
 import arc.util.Log;

@@ -1,0 +1,13 @@
+{
+    "name": "ajf",
+    "displayName": "AJF",
+    "description": "",
+    "author": "",
+    "subtitle": "",
+    "repo": "",
+    "version": "",
+    "minGameVersion": 146,
+    "java": true,
+    "main": "org.durmiendo.ajf.core.AJF",
+    "hidden": false
+}

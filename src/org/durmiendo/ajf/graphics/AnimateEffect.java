@@ -1,4 +1,4 @@
-package org.durmiendo.ajf.grafics;
+package org.durmiendo.ajf.graphics;
 
 import arc.Core;
 import arc.graphics.g2d.Draw;
