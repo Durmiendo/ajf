@@ -3,20 +3,20 @@ package org.durmiendo.ajf.utils.memorycompiler;
 import arc.struct.ObjectMap;
 
 public class InMemoryClassLoader extends ClassLoader {
-    private InMemoryFileManager manager;
+    public ObjectMap<String, Class<?>> classes = new ObjectMap<>();
 
-    public InMemoryClassLoader(ClassLoader parent, InMemoryFileManager manager) {
+    public InMemoryClassLoader(ClassLoader parent) {
         super(parent);
-        this.manager = manager;
+    }
+
+    public void acceptNewClass(String name, byte[] bytes) {
+        classes.put(name, defineClass(name, bytes, 0, bytes.length));
     }
 
     @Override
     protected Class<?> findClass(String name) throws ClassNotFoundException {
-        ObjectMap<String, InMemoryOutputJavaFile> compiledClasses = manager.getBytesMap();
-
-        if (compiledClasses.containsKey(name)) {
-            byte[] bytes = compiledClasses.get(name).getBytes();
-            return defineClass(name, bytes, 0, bytes.length);
+        if (classes.containsKey(name)) {
+            return classes.get(name);
         } else {
             throw new ClassNotFoundException();
         }

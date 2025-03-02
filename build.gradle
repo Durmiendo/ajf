@@ -28,13 +28,15 @@ dependencies {
     antlr "org.antlr:antlr4:4.13.2"
 
     implementation "com.squareup:javapoet:1.13.0"
+
+    implementation files("tools.jar")
 }
 
 configure([tasks.compileJava]) {
-    sourceCompatibility = 16
+    sourceCompatibility = 16 // for the IDE support
+    options.release = 8
 
-    options.fork = false
-    options.compilerArgs.addAll([
+    /*options.compilerArgs.addAll([
             "--add-exports=java.base/jdk.internal.ref=ALL-UNNAMED",
             "--add-exports=java.base/sun.nio.ch=ALL-UNNAMED",
             "--add-exports=jdk.unsupported/sun.misc=ALL-UNNAMED",
@@ -45,7 +47,7 @@ configure([tasks.compileJava]) {
             "--add-opens=java.base/java.lang.reflect=ALL-UNNAMED",
             "--add-opens=java.base/java.io=ALL-UNNAMED",
             "--add-opens=java.base/java.util=ALL-UNNAMED"
-    ])
+    ])*/
 
     javaCompiler = javaToolchains.compilerFor {
         languageVersion = JavaLanguageVersion.of(16)

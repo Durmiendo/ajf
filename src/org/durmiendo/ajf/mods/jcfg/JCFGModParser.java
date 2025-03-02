@@ -9,7 +9,8 @@ import org.durmiendo.mods.parser.jcfg.JCFGLexer;
 public class JCFGModParser {
     public void parse(Fi fi) {
         try {
-            new JCFGHandler(new GenericJCFGUtils()).handleFile(
+            var handler = new JCFGHandler(new GenericJCFGUtils());
+            handler.handleFile(
                     new JCFG(
                             new CommonTokenStream(
                                     new JCFGLexer(
@@ -20,9 +21,9 @@ public class JCFGModParser {
                             )
                     ).file(), fi
             );
+            handler.dispose();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
-
 }

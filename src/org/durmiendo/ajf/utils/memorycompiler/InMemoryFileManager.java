@@ -1,6 +1,8 @@
 package org.durmiendo.ajf.utils.memorycompiler;
 
 import arc.struct.ObjectMap;
+import mindustry.Vars;
+import mindustry.mod.ModClassLoader;
 
 import javax.tools.*;
 import java.io.IOException;
@@ -8,12 +10,13 @@ import java.util.Set;
 
 public class InMemoryFileManager extends ForwardingJavaFileManager<JavaFileManager> {
     private ObjectMap<String, InMemoryOutputJavaFile> compiledClasses;
-    private ClassLoader loader;
+    private final InMemoryClassLoader classLoader;
 
     public InMemoryFileManager(StandardJavaFileManager standardManager) {
         super(standardManager);
-        this.compiledClasses = new ObjectMap<>();
-        this.loader = new InMemoryClassLoader(this.getClass().getClassLoader(), this);
+        compiledClasses = new ObjectMap<>();
+        classLoader = new InMemoryClassLoader(this.getClass().getClassLoader());
+        ((ModClassLoader) Vars.mods.mainLoader()).addChild(classLoader);
     }
 
     @Override
@@ -27,14 +30,14 @@ public class InMemoryFileManager extends ForwardingJavaFileManager<JavaFileManag
     @Override
     public JavaFileObject getJavaFileForOutput(Location location,
                                                String className, JavaFileObject.Kind kind, FileObject sibling) {
-        InMemoryOutputJavaFile classAsBytes = new InMemoryOutputJavaFile(className, kind);
+        InMemoryOutputJavaFile classAsBytes = new InMemoryOutputJavaFile(className, kind, this);
         compiledClasses.put(className, classAsBytes);
         return classAsBytes;
     }
 
     @Override
     public ClassLoader getClassLoader(Location location) {
-        return loader;
+        return classLoader;
     }
 
     @Override
@@ -44,7 +47,7 @@ public class InMemoryFileManager extends ForwardingJavaFileManager<JavaFileManag
         return super.inferBinaryName(location, file);
     }
 
-    public ObjectMap<String, InMemoryOutputJavaFile> getBytesMap() {
-        return compiledClasses;
+    public InMemoryClassLoader getInMemoryClassLoader() {
+        return classLoader;
     }
 }

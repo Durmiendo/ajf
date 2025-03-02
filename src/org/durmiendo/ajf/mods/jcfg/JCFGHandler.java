@@ -4,8 +4,7 @@ import arc.files.Fi;
 import arc.struct.LongMap;
 import arc.struct.ObjectMap;
 import arc.struct.Seq;
-import arc.struct.StringMap;
-import arc.util.Log;
+import arc.util.Disposable;
 import arc.util.Strings;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
@@ -22,12 +21,12 @@ import javax.lang.model.element.Modifier;
 import javax.tools.DiagnosticCollector;
 import javax.tools.JavaCompiler;
 import javax.tools.JavaFileObject;
-import javax.tools.ToolProvider;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class JCFGHandler {
+public class JCFGHandler implements Disposable {
     public static final LongMap<JCFGHandler> registeredHandlers = new LongMap<>();
     public static long ids = 0;
 
@@ -78,7 +77,7 @@ public class JCFGHandler {
     }
 
     public void handleMacro(JCFG.MacroContext macroContext) {
-        var names = macroContext.Name().stream().map(ParseTree::getText).toList();
+        var names = macroContext.Name().stream().map(ParseTree::getText).collect(Collectors.toList());
 
         String name = names.get(0);
 
@@ -91,7 +90,8 @@ public class JCFGHandler {
             }
         }
 
-        compiler = ToolProvider.getSystemJavaCompiler();
+
+        compiler = com.sun.tools.javac.api.JavacTool.create();
         diagnostics = new DiagnosticCollector<>();
         fileManager = new InMemoryFileManager(DynamicJavacFileManager.getStandardFileManager(null, null, null));
     }
@@ -180,7 +180,7 @@ public class JCFGHandler {
                     default -> throw new IllegalStateException("Unexpected value: " + text);
                 };
 
-            }).toList());
+            }).collect(Collectors.toList()));
 
             return methodBuilder.build();
         } catch (ClassNotFoundException e) {
@@ -262,5 +262,10 @@ public class JCFGHandler {
         }
 
         return null;
+    }
+
+    @Override
+    public void dispose() {
+        registeredHandlers.remove(id);
     }
 }
