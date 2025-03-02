@@ -1,17 +1,17 @@
 package org.durmiendo.ajf.utils.memorycompiler;
 
-import javax.tools.SimpleJavaFileObject;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
-import java.net.URI;
 
-public class JavaClassAsBytes extends SimpleJavaFileObject {
-    protected ByteArrayOutputStream bos =
+/** Виртуальный файл в который можно записать данные. */
+public class InMemoryOutputJavaFile extends InMemoryJavaFileObject {
+    public final ByteArrayOutputStream bos =
             new ByteArrayOutputStream();
 
-    public JavaClassAsBytes(String name, Kind kind) {
-        super(URI.create("string:///" + name.replace('.', '/')
-                + kind.extension), kind);
+    public String name;
+
+    public InMemoryOutputJavaFile(String name, Kind kind) {
+        super(name, kind);
     }
 
     public byte[] getBytes() {

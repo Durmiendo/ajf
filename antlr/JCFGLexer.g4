@@ -17,7 +17,9 @@ Comma: ',' ;
 Colon: ':' ;
 SEq: '=' ;
 Constructor: '@' ;
-FuncStart: '<' -> pushMode(FUNC_MODE);
+FuncStart: '>' ;
+CodeStart: '<' -> pushMode(FUNC_MODE), skip;
+Override: '@Override' ;
 
 CommentSLStart: '//' -> pushMode(COMMENTSL_MODE), skip;
 CommentMLStart: '/*' -> pushMode(COMMENTML_MODE), skip;

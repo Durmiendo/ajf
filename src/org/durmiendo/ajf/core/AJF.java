@@ -1,6 +1,5 @@
 package org.durmiendo.ajf.core;
 
-import arc.graphics.Color;
 import arc.struct.ObjectMap;
 import arc.util.Log;
 import mindustry.Vars;
@@ -8,7 +7,7 @@ import mindustry.mod.ClassMap;
 import mindustry.mod.Mod;
 import org.durmiendo.ajf.graphics.AnimateEffect;
 import org.durmiendo.ajf.graphics.JSEffect;
-import org.durmiendo.ajf.mods.configs.jcfg.JCFGModParser;
+import org.durmiendo.ajf.mods.jcfg.JCFGModParser;
 import org.durmiendo.ajf.world.ExtendUnitType;
 
 import java.lang.reflect.Field;
